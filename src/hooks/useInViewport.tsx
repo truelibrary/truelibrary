@@ -11,7 +11,7 @@ function isElementInViewport(el: Element) {
   );
 }
 
-export const useInViewport = (ref: RefObject<Element>) => {
+export const useInViewport = (ref: RefObject<Element | null>) => {
   const [isVisible, setIsVisible] = useState(true);
 
   const update = useCallback(() => {

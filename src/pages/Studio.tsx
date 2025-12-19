@@ -3,7 +3,7 @@ import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "../schemaTypes";
 import { media } from "sanity-plugin-media";
-import { Alert, Center, Container, Notification } from "@mantine/core";
+import { Alert, Center, Container } from "@mantine/core";
 import { IconInfoCircle } from "@tabler/icons-react";
 
 const config = defineConfig({
