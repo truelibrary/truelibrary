@@ -55,7 +55,15 @@ export function Header() {
           </Group>
         </Group>
         <NavLink to={"/studio"}>
-          <Button>Studio</Button>
+          <Button
+            className={
+              localStorage.getItem("enable-studio") !== "true"
+                ? classes.studio__button__hide
+                : ""
+            }
+          >
+            Studio
+          </Button>
         </NavLink>
       </div>
     </header>

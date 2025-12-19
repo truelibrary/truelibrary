@@ -40,3 +40,7 @@
     );
   }
 }
+
+.studio__button__hide {
+  visibility: hidden;
+}
