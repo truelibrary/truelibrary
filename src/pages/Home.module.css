@@ -1,0 +1,22 @@
+.container {
+  background-color: var(--secondary-background);
+  border-radius: 12px;
+}
+
+.link {
+  color: var(--color);
+
+  @mixin hover {
+    transform: scale(1.01);
+  }
+}
+
+.link:hover {
+  color: var(--dimmed-color);
+}
+
+.link__span {
+  padding-right: 8px;
+  font-weight: bold;
+  color: var(--highlight-color);
+}

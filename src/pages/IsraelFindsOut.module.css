@@ -1,0 +1,25 @@
+.container {
+  background-color: var(--secondary-background);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.masonry__grid {
+  display: -webkit-box; /* Not needed if autoprefixing */
+  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: flex;
+  margin-left: -30px; /* gutter size offset */
+  margin-top: 24px;
+  width: auto;
+}
+.masonry__grid__column {
+  padding-left: 30px; /* gutter size */
+  background-clip: padding-box;
+}
+
+/* Style your items */
+.masonry__grid__column > div {
+  /* change div to reference your elements you put in <Masonry> */
+  background: grey;
+  margin-bottom: 12px;
+}

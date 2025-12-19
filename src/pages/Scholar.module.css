@@ -1,0 +1,11 @@
+.scholar__card {
+  cursor: pointer;
+
+  @mixin hover {
+    transform: scale(1.01);
+  }
+}
+
+.scholar__card:hover {
+  color: var(--highlight-color);
+}

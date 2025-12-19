@@ -1,0 +1,16 @@
+.icon__card {
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
+  cursor: pointer;
+  color: inherit;
+}
+
+.icon__card:hover {
+  transform: scale(1.15);
+  color: var(--color-primary);
+}
+
+.link {
+  color: var(--color-primary);
+}
