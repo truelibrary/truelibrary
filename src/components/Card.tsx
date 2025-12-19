@@ -232,7 +232,6 @@ const splitIntoSentences = (text: string): string[] => {
 };
 
 export const ArticleCardPlaceHolder = () => {
-  console.log("here!!!");
   return (
     <>
       <Skeleton width={"100%"} height={260} />
