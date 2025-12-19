@@ -18,21 +18,21 @@ function JoinUs() {
           </Title>
           <Grid>
             <Grid.Col span={4}>
-              <Stack
-                className={classes.icon__card}
-                justify="center"
-                align="center"
-                p={24}
+              <Link
+                className={classes.link}
+                to={import.meta.env.VITE_YOUTUBE}
+                target="_target"
               >
-                <Link
-                  className={classes.link}
-                  to={import.meta.env.VITE_DISCORD}
-                  target="_target"
+                <Stack
+                  className={classes.icon__card}
+                  justify="center"
+                  align="center"
+                  p={24}
                 >
                   <IconBrandDiscordFilled size={64} />
                   <Text fw={500}>Discord</Text>
-                </Link>
-              </Stack>
+                </Stack>
+              </Link>
             </Grid.Col>
             <Grid.Col span={4}>
               <Link

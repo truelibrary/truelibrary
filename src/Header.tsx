@@ -44,7 +44,7 @@ export function Header() {
           <div onClick={() => navigate("/")}>
             <img
               className={classes.icon}
-              width={40}
+              width={54}
               src={TrueIslamLibraryIcon}
             />
           </div>
