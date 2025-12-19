@@ -203,7 +203,8 @@ function PostPage() {
                 </li>
               ),
               link: ({ children, value }) => (
-                <a href={value.href} target={"_blank"}>
+                // <a href={value.href} target={"_blank"}>
+                <a href={value._key} target={"_blank"}>
                   <Text>{children}</Text>
                 </a>
               ),
@@ -263,7 +264,7 @@ function PostPage() {
               carousel: ({ value }) => {
                 return (
                   <Carousel className={classes.carousel}>
-                    {value.slides.map((slide) => (
+                    {value.slides.map((slide: any) => (
                       <Carousel.Slide>
                         <img src={slide.asset.url} />
                       </Carousel.Slide>

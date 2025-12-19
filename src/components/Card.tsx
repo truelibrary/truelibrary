@@ -1,12 +1,4 @@
-import {
-  Blockquote,
-  Card,
-  Flex,
-  Group,
-  Popover,
-  Stack,
-  Text,
-} from "@mantine/core";
+import { Blockquote, Card, Flex, Group, Popover, Text } from "@mantine/core";
 import classes from "./Card.module.css";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { PortableTextDocument } from "../types";
@@ -70,19 +62,19 @@ export function ArticleCard({ title, body, tags, search, onClick }: CardProps) {
               h4: ({ children }: Props) => (
                 <h4 style={{ fontSize: 10 }}>{children}</h4>
               ),
-              blockquote: ({ children }) => (
+              blockquote: ({ children }: any) => (
                 <Blockquote style={{ marginTop: 8, padding: 5 }}>
                   {children}
                 </Blockquote>
               ),
-              carousel: ({ slides }) => (
+              carousel: ({ slides }: any) => (
                 <img
                   className={classes.card__img}
                   src={slides[0].asset.url}
                   alt=""
                 />
               ),
-              image: ({ asset, alt }) => {
+              image: ({ asset, alt }: any) => {
                 if (
                   body.length !== 1 &&
                   body.find((b) => b._type === "image")

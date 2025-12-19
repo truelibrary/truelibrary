@@ -4,7 +4,6 @@ import {
   Grid,
   Group,
   Text,
-  BackgroundImage,
   Stack,
 } from "@mantine/core";
 import classes from "./Library.module.css";
@@ -14,7 +13,6 @@ import { useQuery } from "@tanstack/react-query";
 import { sanityClient } from "../client";
 import { badges } from "../utils";
 import Pill from "../components/Pill";
-import Azhar from "../assets/azhar.webp";
 import { ArticleCard } from "../components/Card";
 import { useNavigate } from "react-router";
 import { useState } from "react";
