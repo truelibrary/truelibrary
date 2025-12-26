@@ -15,10 +15,11 @@ import { badges } from "../utils";
 import Pill from "../components/Pill";
 import { ArticleCard, ArticleCardPlaceHolder } from "../components/Card";
 import { useNavigate } from "react-router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { Post } from "../types";
 import PageTransition from "../animations/PageTransition";
 import { MultiplePlaceHolder } from "../components/MultiplePlaceHolder";
+import Fuse from "fuse.js";
 
 const fetchNewPosts = async () => {
   const query = `*[_type == "post"] {
@@ -67,27 +68,25 @@ function Library() {
     navigate(`/post/${slug}`);
   };
 
-  const filteredPosts = data?.filter((post) => {
-    const matchesTags = selected.length
-      ? post.tags.some((tag: string) => selected.includes(tag))
-      : true;
+  const filteredPosts = useMemo(() => {
+    const fuse = new Fuse(data ?? [], {
+      includeScore: true,
+      threshold: 0.4, // try 0.35–0.5
+      distance: 200,
+      ignoreLocation: true, // important for “words separated by other words”
+      minMatchCharLength: 2,
+      keys: [
+        { name: "title", weight: 0.5 },
+        { name: "tags", weight: 0.2 },
+        { name: "body.children.text", weight: 0.3 },
+      ],
+    });
+    const filteredPosts = search
+      ? fuse.search(search).map((f) => f.item)
+      : data;
 
-    const bodyText = post.body
-      .map((block: any) => {
-        if (block._type === "block" && block.children) {
-          return block.children.map((child: any) => child.text).join(" ");
-        }
-        return ""; // ignore non-block types
-      })
-      .join(" ");
-
-    const combinedText = `${post.title} ${bodyText}`.toLowerCase();
-    const searchLower = search.toLowerCase();
-
-    const matchesSearch = search ? combinedText.includes(searchLower) : true;
-
-    return matchesTags && matchesSearch;
-  });
+    return filteredPosts;
+  }, [data, search]);
 
   return (
     <>

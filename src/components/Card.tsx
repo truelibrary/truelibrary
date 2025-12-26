@@ -25,17 +25,21 @@ type CardProps = {
   search?: string;
   onClick?: () => void;
 };
+
 export function ArticleCard({ title, body, tags, search, onClick }: CardProps) {
   const plainText = extractPlainText(body);
   const sentences = splitIntoSentences(plainText);
-  const lowerSearch = search?.toLowerCase() || "";
-  const matchingSentences = sentences.filter((s) =>
-    s.toLowerCase().includes(lowerSearch)
-  );
 
-  const displayedSentences = matchingSentences
-    .slice(0, 3)
-    .map((s) => highlightText(s, search || ""));
+  const searchWords = getSearchWords(search);
+
+  const matchingSentences =
+    searchWords.length === 0
+      ? []
+      : sentences.filter((s) =>
+          searchWords.some((w) => s.toLowerCase().includes(w))
+        );
+
+  const displayedSentences = matchingSentences.slice(0, 3);
 
   return (
     <Card
@@ -50,8 +54,8 @@ export function ArticleCard({ title, body, tags, search, onClick }: CardProps) {
       <Text fz="sm" mb="lg" c="dimmed" lineClamp={6}>
         {search ? (
           <div style={{ marginTop: 16 }}>
-            {displayedSentences?.map((sentence, idx) => (
-              <span key={idx}>{sentence} </span>
+            {displayedSentences.map((sentence, idx) => (
+              <span key={idx}>{highlightWords(sentence, searchWords)} </span>
             ))}
           </div>
         ) : (
@@ -199,23 +203,36 @@ export function CardPills({ pills }: CardPillsProps) {
   );
 }
 
-function highlightText(text: string, query: string) {
-  if (!query) return text;
+/**
+ * --- highlighting helpers (simplified) ---
+ */
 
-  const regex = new RegExp(`(${query})`, "gi");
-  const parts = text.split(regex);
-
-  return parts.map((part, i) =>
-    regex.test(part) ? (
-      <span key={i} style={{ color: "var(--highlight-color)" }}>
-        {part}
-      </span>
-    ) : (
-      part
-    )
-  );
+function getSearchWords(search?: string) {
+  if (!search) return [];
+  return search.toLowerCase().split(/\s+/).filter(Boolean);
 }
 
+function highlightWords(text: string, words: string[]) {
+  if (words.length === 0) return text;
+
+  // simple “wrap all word matches” approach
+  let html = text;
+
+  for (const w of words) {
+    // escape regex chars in each word
+    const safe = w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    html = html.replace(
+      new RegExp(safe, "gi"),
+      (match) => `<span style="color: var(--highlight-color)">${match}</span>`
+    );
+  }
+
+  return <span dangerouslySetInnerHTML={{ __html: html }} />;
+}
+
+/**
+ * --- existing helpers ---
+ */
 const extractPlainText = (doc: PortableTextDocument): string => {
   return doc
     .map((block) => {
