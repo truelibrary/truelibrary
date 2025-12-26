@@ -101,6 +101,8 @@ function PostPage() {
       <Text ml={4} size="sm" my="xs" c="dimmed">
         Table of contents
       </Text>
+      {/* Hide Table of contents after the label is out of view */}
+      <div ref={ref} />
       <TableOfContents
         variant="filled"
         scrollSpyOptions={{
@@ -151,8 +153,6 @@ function PostPage() {
           </Stack>
           {!isMobile && tableOfContents}
         </Stack>
-
-        <div ref={ref} />
       </Group>
       <Flex
         direction="column"
