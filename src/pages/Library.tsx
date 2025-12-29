@@ -15,78 +15,71 @@ import { badges } from "../utils";
 import Pill from "../components/Pill";
 import { ArticleCard, ArticleCardPlaceHolder } from "../components/Card";
 import { useNavigate } from "react-router";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import type { Post } from "../types";
 import PageTransition from "../animations/PageTransition";
 import { MultiplePlaceHolder } from "../components/MultiplePlaceHolder";
-import Fuse from "fuse.js";
+import { useDebouncedValue } from "@mantine/hooks";
 
-const fetchNewPosts = async () => {
-  const query = `*[_type == "post"] {
-    _id,
-    title,
-    slug,
-    image {
-      asset->{
-        url
-      }
-    },
-    body[]{
-      ...,
-      asset->{
-        _id,
-        url
+const fetchNewPosts = async (queryString?: string) => {
+  const q = queryString?.trim();
+
+  const query = `
+    *[
+      _type == "post" &&
+      (
+        !defined($q) || $q == "" ||
+        title match $q ||
+        pt::text(body) match $q
+      )
+    ]{
+      _id,
+      title,
+      slug,
+      image {
+        asset->{
+          url
+        }
       },
-    _type == "carousel" => {
-      _type,
-      slides[] {
+      body[]{
+        ...,
         asset->{
           _id,
           url
+        },
+        _type == "carousel" => {
+          _type,
+          slides[] {
+            asset->{
+              _id,
+              url
+            }
+          }
         }
-      }
-    },
-    },
-    tags,
-    publishedAt
-  }`;
-  const posts = await sanityClient.fetch(query);
+      },
+      tags,
+      publishedAt
+    }
+    | order(_score desc, publishedAt desc)
+  `;
+  const posts = await sanityClient.fetch(query, { q });
   return posts;
 };
 
 function Library() {
   const navigate = useNavigate();
-  const { isLoading, data } = useQuery<Post[]>({
-    queryKey: ["newPosts"],
-    queryFn: fetchNewPosts,
-  });
-
   const [selected, setSelected] = useState<string[]>([]);
   const [search, setSearch] = useState<string>("");
+  const [debounced] = useDebouncedValue(search, 200);
+
+  const { isLoading, data } = useQuery<Post[]>({
+    queryKey: ["newPosts", debounced],
+    queryFn: () => fetchNewPosts(debounced),
+  });
 
   const onClickCard = (slug: string) => {
     navigate(`/post/${slug}`);
   };
-
-  const filteredPosts = useMemo(() => {
-    const fuse = new Fuse(data ?? [], {
-      includeScore: true,
-      threshold: 0.4, // try 0.35–0.5
-      distance: 200,
-      ignoreLocation: true, // important for “words separated by other words”
-      minMatchCharLength: 2,
-      keys: [
-        { name: "title", weight: 0.5 },
-        { name: "tags", weight: 0.2 },
-        { name: "body.children.text", weight: 0.3 },
-      ],
-    });
-    const filteredPosts = search
-      ? fuse.search(search).map((f) => f.item)
-      : data;
-
-    return filteredPosts;
-  }, [data, search]);
 
   return (
     <>
@@ -147,7 +140,7 @@ function Library() {
               }
             />
           )}
-          {filteredPosts?.map((post) => (
+          {data?.map((post) => (
             <Grid.Col key={post._id} span={{ base: 12, sm: 6, md: 4 }}>
               <ArticleCard
                 title={post.title}
@@ -160,13 +153,11 @@ function Library() {
           ))}
         </Grid>
 
-        {data &&
-          filteredPosts?.length === 0 &&
-          (search || selected.length > 0) && (
-            <Text ta="center" mt="xl" c="dimmed" fw={500}>
-              No results found.
-            </Text>
-          )}
+        {data && data?.length === 0 && (search || selected.length > 0) && (
+          <Text ta="center" mt="xl" c="dimmed" fw={500}>
+            No results found.
+          </Text>
+        )}
       </Container>
     </>
   );
