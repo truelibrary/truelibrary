@@ -31,13 +31,11 @@ export function Header() {
                 hiddenFrom="sm"
               />
             </Menu.Target>
-            <Menu.Dropdown className={classes.burger}>
+            <Menu.Dropdown ml={80}>
               {...headerRoutes.map((route, index) => (
-                <div key={`${route.title}-${index}`}>
-                  <NavLink to={route.path}>
-                    <Menu.Item onClick={close}>{route.title}</Menu.Item>
-                  </NavLink>
-                </div>
+                <NavLink key={`${route.title}-${index}`} to={route.path}>
+                  <Menu.Item onClick={close}>{route.title}</Menu.Item>
+                </NavLink>
               ))}
             </Menu.Dropdown>
           </Menu>

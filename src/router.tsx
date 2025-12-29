@@ -1,4 +1,3 @@
-// import IsraelFindsOut from "./pages/IsraelFindsOut";
 import Home from "./pages/Home";
 import JoinUs from "./pages/JoinUs";
 import Library from "./pages/Library";
@@ -32,11 +31,6 @@ export const headerRoutes = [
     title: "Scholars",
     element: Scholars,
   },
-  // {
-  //   path: "/israel-finds-out",
-  //   title: "Israel Finds Out",
-  //   element: IsraelFindsOut,
-  // },
   // {
   //   path: "/about",
   //   title: "About",
