@@ -23,6 +23,7 @@ import NoumanAliKhan from "../assets/scholars/NoumanAliKhan.jpg";
 import AdhamAlAsimi from "../assets/scholars/AdhamAlAsimi.jpg";
 import DrHamzaelBekri from "../assets/scholars/DrHamzaelBekri.jpg";
 import WalidAtiya from "../assets/scholars/WalidAtiya.jpeg";
+import HarounKanj from "../assets/scholars/HarounKanj.png";
 // import UstadhMunir from "../assets/scholars/UstadhMunir.jpg";
 import AbdulKarimAlShdeifat from "../assets/scholars/AbdulKarimAlShdeifat.jpg";
 import AhmadAlDamanhury from "../assets/scholars/AhmadAlDamanhury.jpg";
@@ -89,6 +90,13 @@ const englishScholars = [
     link: "https://m.youtube.com/@SandalaMediaCenter",
     description:
       "Shaykh Hamza Yusuf is an American Islamic scholar and co-founder of Zaytuna College. A convert to Islam, he’s known for promoting classical Sunni thought, translating key texts, and advancing Islamic education in the West.",
+  },
+  {
+    avatar: HarounKanj,
+    name: "Haroun Kanj",
+    link: "https://www.youtube.com/@ShaykhHarounKanj",
+    description:
+      "He is a contemporary Sunni scholar and daʿi based in Australia, of Lebanese descent, who studied Islamic sciences with scholars from Yemen, Lebanon, and Syria and promotes traditional Sunni Islam through the classical schools of creed, law, and spirituality.",
   },
   {
     avatar: Atabek,
