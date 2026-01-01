@@ -11,12 +11,10 @@ import classes from "./Card.module.css";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { PortableTextDocument } from "../types";
 import { badges } from "../utils";
+import { toPlainText } from "@portabletext/toolkit";
 import Pill from "./Pill";
-import PortableText from "react-portable-text";
-
-type Props = {
-  children: ReactNode;
-};
+import { PortableText } from "@portabletext/react";
+import Fuse from "fuse.js";
 
 type CardProps = {
   title: string;
@@ -27,19 +25,9 @@ type CardProps = {
 };
 
 export function ArticleCard({ title, body, tags, search, onClick }: CardProps) {
-  const plainText = extractPlainText(body);
-  const sentences = splitIntoSentences(plainText);
-
-  const searchWords = getSearchWords(search);
-
-  const matchingSentences =
-    searchWords.length === 0
-      ? []
-      : sentences.filter((s) =>
-          searchWords.some((w) => s.toLowerCase().includes(w))
-        );
-
-  const displayedSentences = matchingSentences.slice(0, 3);
+  const plainText = toPlainText(body);
+  const keywords = search ? search.split(" ").map((v) => v.toLowerCase()) : [];
+  const displaySentences = searchSentencesFuzzy(plainText, search || "");
 
   return (
     <Card
@@ -51,60 +39,75 @@ export function ArticleCard({ title, body, tags, search, onClick }: CardProps) {
     >
       <Text className={classes.title}>{title}</Text>
 
-      <Text fz="sm" mb="lg" c="dimmed" lineClamp={6}>
+      <Text component="div" fz="sm" mb="lg" c="dimmed" lineClamp={6}>
         {search ? (
           <div style={{ marginTop: 16 }}>
-            {displayedSentences.map((sentence, idx) => (
-              <span key={idx}>{highlightWords(sentence, searchWords)} </span>
+            {displaySentences.map((sentence, sentenceIdx) => (
+              <p key={sentenceIdx}>
+                {sentence.split(/\b/).map((part, partIdx) =>
+                  keywords.includes(part.toLocaleLowerCase()) ? (
+                    <span className={classes.highlight} key={partIdx}>
+                      {part}
+                    </span>
+                  ) : (
+                    part
+                  )
+                )}
+              </p>
             ))}
           </div>
         ) : (
           <PortableText
-            content={body}
-            serializers={{
-              h1: ({ children }: Props) => (
-                <h1 style={{ fontSize: 16 }}>{children}</h1>
-              ),
-              h2: ({ children }: Props) => (
-                <h2 style={{ fontSize: 14 }}>{children}</h2>
-              ),
-              h3: ({ children }: Props) => (
-                <h3 style={{ fontSize: 12 }}>{children}</h3>
-              ),
-              h4: ({ children }: Props) => (
-                <h4 style={{ fontSize: 10 }}>{children}</h4>
-              ),
-              blockquote: ({ children }: any) => (
-                <Blockquote style={{ marginTop: 8, padding: 5 }}>
-                  {children}
-                </Blockquote>
-              ),
-              carousel: ({ slides }: any) => (
-                <img
-                  className={classes.card__img}
-                  src={slides[0].asset.url}
-                  alt=""
-                />
-              ),
-              image: ({ asset, alt }: any) => {
-                if (
-                  body.length !== 1 &&
-                  body.find((b) => b._type === "image")
-                ) {
-                  return;
-                }
-                return (
+            value={body}
+            components={{
+              block: {
+                normal: ({ children }) => <div>{children}</div>, // or <div>
+                h1: ({ children }: any) => (
+                  <h1 style={{ fontSize: 16 }}>{children}</h1>
+                ),
+                h2: ({ children }: any) => (
+                  <h2 style={{ fontSize: 14 }}>{children}</h2>
+                ),
+                h3: ({ children }: any) => (
+                  <h3 style={{ fontSize: 12 }}>{children}</h3>
+                ),
+                h4: ({ children }: any) => (
+                  <h4 style={{ fontSize: 10 }}>{children}</h4>
+                ),
+                blockquote: ({ children }: any) => (
+                  <Blockquote style={{ marginTop: 8, padding: 5 }}>
+                    {children}
+                  </Blockquote>
+                ),
+              },
+              types: {
+                carousel: ({ value }: any) => (
                   <img
-                    src={asset?.url}
-                    alt={alt || "Image"}
-                    style={{
-                      marginTop: 16,
-                      maxWidth: "100%",
-                      height: "auto",
-                      borderRadius: "8px",
-                    }}
+                    className={classes.card__img}
+                    src={value.slides[0].asset.url}
+                    alt=""
                   />
-                );
+                ),
+                image: ({ value }: any) => {
+                  if (
+                    body.length !== 1 &&
+                    body.find((b) => b._type === "image")
+                  ) {
+                    return;
+                  }
+                  return (
+                    <img
+                      src={value.asset?.url}
+                      alt={value.asset?.alt || "Image"}
+                      style={{
+                        marginTop: 16,
+                        maxWidth: "100%",
+                        height: "auto",
+                        borderRadius: "8px",
+                      }}
+                    />
+                  );
+                },
               },
             }}
           />
@@ -203,49 +206,25 @@ export function CardPills({ pills }: CardPillsProps) {
   );
 }
 
-/**
- * --- highlighting helpers (simplified) ---
- */
+const searchSentencesFuzzy = (text: string, query: string) => {
+  const sentences = text
+    .trim()
+    .replace(/\s+/g, " ")
+    .split(/(?<=[.!?])\s+/)
+    .filter(Boolean);
 
-function getSearchWords(search?: string) {
-  if (!search) return [];
-  return search.toLowerCase().split(/\s+/).filter(Boolean);
-}
+  const fuse = new Fuse(
+    sentences.map((s, i) => ({ id: i, text: s })),
+    {
+      keys: ["text"],
+      includeScore: true,
+      threshold: 0.35,
+      ignoreLocation: true,
+      minMatchCharLength: 2,
+    }
+  );
 
-function highlightWords(text: string, words: string[]) {
-  if (words.length === 0) return text;
-
-  // simple “wrap all word matches” approach
-  let html = text;
-
-  for (const w of words) {
-    // escape regex chars in each word
-    const safe = w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    html = html.replace(
-      new RegExp(safe, "gi"),
-      (match) => `<span style="color: var(--highlight-color)">${match}</span>`
-    );
-  }
-
-  return <span dangerouslySetInnerHTML={{ __html: html }} />;
-}
-
-/**
- * --- existing helpers ---
- */
-const extractPlainText = (doc: PortableTextDocument): string => {
-  return doc
-    .map((block) => {
-      if (block._type === "block" && Array.isArray(block.children)) {
-        return block.children.map((child) => child.text).join("");
-      }
-      return "";
-    })
-    .join("\n");
-};
-
-const splitIntoSentences = (text: string): string[] => {
-  return text.split(/(?<=[.!?؟]|[ۚۛۗۙ])\s+|\n+/g).filter(Boolean);
+  return fuse.search(query).map((r) => r.item.text);
 };
 
 export const ArticleCardPlaceHolder = () => {

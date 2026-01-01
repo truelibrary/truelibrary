@@ -147,7 +147,7 @@ function Library() {
                 body={post.body}
                 tags={post.tags}
                 onClick={() => onClickCard(post.slug.current)}
-                search={search}
+                search={isLoading ? search : ""}
               />
             </Grid.Col>
           ))}
