@@ -7,14 +7,14 @@ import { AppShell, createTheme, MantineProvider } from "@mantine/core";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router";
 import { headerRoutes } from "./router";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-import Home from "./pages/Library";
+import Home from "./pages/Home";
 import Post from "./pages/Post";
+import Library from "./pages/Library";
 import StudioRoute from "./pages/Studio";
 import { Header } from "./Header";
 import { FooterSocial } from "./components/Footer";
 import { AnimatePresence } from "framer-motion";
 import ScrollToTop from "./components/ScrollToTop";
-import Library from "./pages/Library";
 
 const primaryColor = "#317B42";
 const queryClient = new QueryClient();
@@ -65,9 +65,9 @@ const Content = () => {
           {headerRoutes.map((route) => (
             <Route key={route.path} path={route.path} element={route.element} />
           ))}
-          <Route path="/" element={Library} />
+          <Route path="/" element={Home} />
           <Route path="/studio" element={<StudioRoute />} />
-          <Route path="/post" element={Home} />
+          <Route path="/post" element={Library} />
           <Route path="/post/:slug" element={<Post />} />
         </Routes>
       </AppShell.Main>
