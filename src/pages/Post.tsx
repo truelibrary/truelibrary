@@ -129,16 +129,21 @@ function PostPage() {
         visibleFrom="md"
       >
         <Stack className={classes.sidebar__inner}>
-          <Text size="sm" ml={4} mt="sm" my="sm" c="dimmed">
-            Tags
-          </Text>
-          <Flex wrap="wrap" gap={4}>
-            {data.tags.map((tag) => (
-              <Pill key={tag} isSelectable={false}>
-                {badges.find((b) => b.value === tag)?.title}
-              </Pill>
-            ))}
-          </Flex>
+          {data.tags && (
+            <>
+              <Text size="sm" ml={4} mt="sm" my="sm" c="dimmed">
+                Tags
+              </Text>
+              <Flex wrap="wrap" gap={4}>
+                {data.tags?.map((tag) => (
+                  <Pill key={tag} isSelectable={false}>
+                    {badges.find((b) => b.value === tag)?.title}
+                  </Pill>
+                ))}
+              </Flex>
+            </>
+          )}
+
           <Stack>
             <Text size="sm" ml={4} mt="sm" my="sm" c="dimmed">
               Author
@@ -316,16 +321,20 @@ const PostInfo = ({ data, responsive, tableOfContents }: PostInfoProps) => {
       visibleFrom={responsive ? "md" : ""}
     >
       <Stack w={320}>
-        <Text size="sm" ml={4} mt="sm" my="sm" c="dimmed">
-          Tags
-        </Text>
-        <Flex wrap="wrap" gap={4}>
-          {data.tags.map((tag) => (
-            <Pill key={tag} isSelectable={false}>
-              {badges.find((b) => b.value === tag)?.title}
-            </Pill>
-          ))}
-        </Flex>
+        {data.tags && (
+          <>
+            <Text size="sm" ml={4} mt="sm" my="sm" c="dimmed">
+              Tags
+            </Text>
+            <Flex wrap="wrap" gap={4}>
+              {data.tags?.map((tag) => (
+                <Pill key={tag} isSelectable={false}>
+                  {badges.find((b) => b.value === tag)?.title}
+                </Pill>
+              ))}
+            </Flex>
+          </>
+        )}
         <Stack>
           <Text size="sm" ml={4} mt="sm" my="sm" c="dimmed">
             Author
