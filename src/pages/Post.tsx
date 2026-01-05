@@ -217,14 +217,14 @@ function PostPage() {
               link: ({ children, value }) => (
                 // <a href={value.href} target={"_blank"}>
                 <a href={value._key} target={"_blank"}>
-                  <Text>{children}</Text>
+                  {children}
                 </a>
               ),
             },
             marks: {
               link: ({ children, value }) => (
                 <a href={value.href} target={"_blank"}>
-                  <Text>{children}</Text>
+                  {children}
                 </a>
               ),
             },
