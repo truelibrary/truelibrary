@@ -8,7 +8,7 @@ import {
   Text,
 } from "@mantine/core";
 import classes from "./Card.module.css";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { PortableTextDocument } from "../types";
 import { badges } from "../utils";
 import { toPlainText } from "@portabletext/toolkit";
