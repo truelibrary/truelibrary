@@ -140,17 +140,23 @@ function Library() {
               }
             />
           )}
-          {data?.map((post) => (
-            <Grid.Col key={post._id} span={{ base: 12, sm: 6, md: 4 }}>
-              <ArticleCard
-                title={post.title}
-                body={post.body}
-                tags={post.tags}
-                onClick={() => onClickCard(post.slug.current)}
-                search={isLoading ? search : ""}
-              />
-            </Grid.Col>
-          ))}
+          {data
+            ?.filter(
+              (i) =>
+                selected.length === 0 ||
+                selected.find((v) => i.tags.includes(v))
+            )
+            .map((post) => (
+              <Grid.Col key={post._id} span={{ base: 12, sm: 6, md: 4 }}>
+                <ArticleCard
+                  title={post.title}
+                  body={post.body}
+                  tags={post.tags}
+                  onClick={() => onClickCard(post.slug.current)}
+                  search={isLoading ? search : ""}
+                />
+              </Grid.Col>
+            ))}
         </Grid>
 
         {data && data?.length === 0 && (search || selected.length > 0) && (
