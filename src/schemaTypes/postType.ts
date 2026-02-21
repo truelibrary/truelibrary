@@ -191,6 +191,18 @@ export const postType = defineType({
       type: "number",
     }),
     defineField({
+      name: "html",
+      type: "document",
+      fields: [
+        {
+          name: "htmlContent",
+          type: "text",
+          title: "HTML Content",
+          description: "Write your HTML directly here",
+        },
+      ],
+    }),
+    defineField({
       name: "body",
       type: "array",
       of: [

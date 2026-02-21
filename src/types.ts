@@ -14,12 +14,15 @@ export type Post = {
   };
   title: string;
   author: string;
+  html: HtmlDocument;
   body: PortableTextDocument;
   category?: string;
   categoryWeight?: number;
   tags: string[];
   _id: string;
 };
+
+type HtmlDocument = { htmlContent: string };
 
 type PortableTextSpan = {
   _key: string;

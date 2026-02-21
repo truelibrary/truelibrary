@@ -40,6 +40,7 @@ const fetchPost = async (slug: string) => {
   title,
   slug,
   image{ asset->{ url } },
+  html,
   body[]{
     ...,
     _type == "carousel" => {
@@ -202,104 +203,110 @@ function PostPage() {
         )}
         <img height={48} src={Bismillah} />
         <h1>{data.title}</h1>
-        <PortableText
-          value={data.body}
-          components={{
-            listItem: {
-              number: ({ children }) => (
-                <li className={classes.list}>{children}</li>
-              ),
-              bullet: ({ children }) => (
-                <li className={classes.list}>
-                  <Text>{children}</Text>
-                </li>
-              ),
-              link: ({ children, value }) => (
-                // <a href={value.href} target={"_blank"}>
-                <a href={value._key} target={"_blank"}>
-                  {children}
-                </a>
-              ),
-            },
-            marks: {
-              link: ({ children, value }) => (
-                <a href={value.href} target={"_blank"}>
-                  {children}
-                </a>
-              ),
-            },
-            types: {
-              youtube: ({ value }) => (
-                <div className={classes.youtube}>
-                  <ReactPlayer
-                    url={value.url}
-                    width="100%"
-                    height="100%"
-                    controls
-                  />
-                </div>
-              ),
-              tiktok: ({ value }) => {
-                const { url } = value;
-                const match = url.match(/\/video\/(\d+)/);
-                return (
-                  <div className={classes.tiktok__container}>
-                    <script async src="https://www.tiktok.com/embed.js" />
-                    <div className={classes.tiktok__wrapper}>
-                      <iframe
-                        scrolling="no"
-                        title="Tiktok"
-                        src={`https://www.tiktok.com/player/v1/${match?.[1]}`}
-                        className={classes.tiktok__video}
-                        allow="encrypted-media;"
-                      ></iframe>
-                    </div>
+        {data.html ? (
+          <div dangerouslySetInnerHTML={{ __html: data.html.htmlContent }} />
+        ) : (
+          <PortableText
+            value={data.body}
+            components={{
+              /* Temporary remove these for now */
+              // listItem: {
+              //   number: ({ children }) => (
+              //     <li className={classes.list}>{children}</li>
+              //   ),
+              //   bullet: ({ children }) => (
+              //     <li className={classes.list}>
+              //       <Text>{children}</Text>
+              //     </li>
+              //   ),
+              //   link: ({ children, value }) => (
+              //     <a href={value.href} target={"_blank"}>
+              //       <Text>{children}</Text>
+              //     </a>
+              //   ),
+              // },
+              // marks: {
+              //   link: ({ children, value }) => (
+              //     <a href={value.href} target={"_blank"}>
+              //       <Text>{children}</Text>
+              //     </a>
+              //   ),
+              // },
+              types: {
+                youtube: ({ value }) => (
+                  <div className={classes.youtube}>
+                    <ReactPlayer
+                      url={value.url}
+                      width="100%"
+                      height="100%"
+                      controls
+                    />
                   </div>
-                );
+                ),
+                tiktok: ({ value }) => {
+                  const { url } = value;
+                  const match = url.match(/\/video\/(\d+)/);
+                  return (
+                    <div className={classes.tiktok__container}>
+                      <script async src="https://www.tiktok.com/embed.js" />
+                      <div className={classes.tiktok__wrapper}>
+                        <iframe
+                          scrolling="no"
+                          title="Tiktok"
+                          src={`https://www.tiktok.com/player/v1/${match?.[1]}`}
+                          className={classes.tiktok__video}
+                          allow="encrypted-media;"
+                        ></iframe>
+                      </div>
+                    </div>
+                  );
+                },
+                fileAttachment: ({ value }) => {
+                  const {
+                    file: {
+                      asset: { url },
+                    },
+                  } = value;
+                  return (
+                    <iframe
+                      src={url}
+                      width="100%"
+                      height="1000px"
+                      style={{ border: "none" }}
+                      title="PDF Viewer"
+                    />
+                  );
+                },
+                carousel: ({ value }) => {
+                  return (
+                    <Carousel className={classes.carousel}>
+                      {value.slides.map((slide) => (
+                        <Carousel.Slide>
+                          <img src={slide.asset.url} />
+                        </Carousel.Slide>
+                      ))}
+                    </Carousel>
+                  );
+                },
+                image: ({ value }) => (
+                  <Center>
+                    <img
+                      src={value.asset.url}
+                      alt=""
+                      className={classes.image}
+                      loading="lazy"
+                    />
+                  </Center>
+                ),
               },
-              fileAttachment: ({ value }) => {
-                const {
-                  file: {
-                    asset: { url },
-                  },
-                } = value;
-                return (
-                  <iframe
-                    src={url}
-                    width="100%"
-                    height="1000px"
-                    style={{ border: "none" }}
-                    title="PDF Viewer"
-                  />
-                );
+              block: {
+                blockquote: ({ children }) => (
+                  <Blockquote>{children}</Blockquote>
+                ),
               },
-              carousel: ({ value }) => {
-                return (
-                  <Carousel className={classes.carousel}>
-                    {value.slides.map((slide: any) => (
-                      <Carousel.Slide>
-                        <img src={slide.asset.url} />
-                      </Carousel.Slide>
-                    ))}
-                  </Carousel>
-                );
-              },
-              image: ({ value }) => (
-                <Center>
-                  <img
-                    src={value.asset.url}
-                    alt=""
-                    className={classes.image}
-                    loading="lazy"
-                  />
-                </Center>
-              ),
-            },
-            block: {
-              blockquote: ({ children }) => <Blockquote>{children}</Blockquote>,
-            },
-          }}
-        />
+            }}
+          />
+        )}
       </Flex>
     </Container>
   );
