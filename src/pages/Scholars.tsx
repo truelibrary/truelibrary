@@ -15,7 +15,7 @@ import Bouti from "../assets/scholars/Bouti.jpg";
 import ShamsTameez from "../assets/scholars/ShamsTameez .jpg";
 import AHM from "../assets/scholars/ahm.jpg";
 import HamzaYusuf from "../assets/scholars/HamzaYusuf.jpg";
-import Atabek from "../assets/scholars/ShaykhAtabek.png";
+// import Atabek from "../assets/scholars/ShaykhAtabek.png";
 import Arshad from "../assets/scholars/arshad.jpg";
 import ShaykhMuhammadYasirAlHanafi from "../assets/scholars/ShaykhMuhammadYasirAlHanafi.webp";
 import NoumanAliKhan from "../assets/scholars/NoumanAliKhan.jpg";
@@ -30,7 +30,7 @@ import AhmadAlDamanhury from "../assets/scholars/AhmadAlDamanhury.jpg";
 import SchAhmedAlsharif from "../assets/scholars/SchAhmedAlsharif.jpg";
 // import AdnanIbrahim from "../assets/scholars/AdnanIbrahim.jpg";
 import ShaykhSulayamanVanAel from "../assets/scholars/ShaykhSulayamanVanAel.png";
-import MuftiMenk from "../assets/scholars/menk.jpg";
+// import MuftiMenk from "../assets/scholars/menk.jpg";
 import Munur from "../assets/scholars/munur.jpg";
 import classes from "./Scholar.module.css";
 import { Link } from "react-router";
@@ -98,13 +98,13 @@ const englishScholars = [
     description:
       "He is a contemporary Sunni scholar and daʿi based in Australia, of Lebanese descent, who studied Islamic sciences with scholars from Yemen, Lebanon, and Syria and promotes traditional Sunni Islam through the classical schools of creed, law, and spirituality.",
   },
-  {
-    avatar: Atabek,
-    name: "Atabek Shukurov",
-    link: "https://m.youtube.com/@Nazam44",
-    description:
-      "An Uzbek-born, UK-based Islamic scholar and Māturīdī theologian. Trained in Uzbekistan, Damascus, and Al-Azhar, he founded Afiya Institute and Avicenna Academy, teaching traditional Islamic sciences and addressing contemporary issues.",
-  },
+  // {
+  //   avatar: Atabek,
+  //   name: "Atabek Shukurov",
+  //   link: "https://m.youtube.com/@Nazam44",
+  //   description:
+  //     "An Uzbek-born, UK-based Islamic scholar and Māturīdī theologian. Trained in Uzbekistan, Damascus, and Al-Azhar, he founded Afiya Institute and Avicenna Academy, teaching traditional Islamic sciences and addressing contemporary issues.",
+  // },
   {
     avatar: Arshad,
     name: "Asrar Rashid",
@@ -119,13 +119,13 @@ const englishScholars = [
     description:
       "UK-based Islamic scholar and Imam in Aylesbury, combining traditional Alim training with academic studies in philosophy (BA & MA) and a PhD in kalām. A graduate of the Islamic Institute of Dewsbury, he now teaches creed, fiqh, and philosophy, bridging classical Islamic sciences with modern intellectual thought.",
   },
-  {
-    avatar: MuftiMenk,
-    name: "Mufti Menk",
-    link: "https://m.youtube.com/@muftimenkofficial",
-    description:
-      "Mufti Menk for speeches. Was the Grand Mufti of Zimbabwe and a popular global Islamic speaker, known for accessible, motivational talks on faith, compassion, and daily life.",
-  },
+  // {
+  //   avatar: MuftiMenk,
+  //   name: "Mufti Menk",
+  //   link: "https://m.youtube.com/@muftimenkofficial",
+  //   description:
+  //     "Mufti Menk for speeches. Was the Grand Mufti of Zimbabwe and a popular global Islamic speaker, known for accessible, motivational talks on faith, compassion, and daily life.",
+  // },
   {
     avatar: NoumanAliKhan,
     name: "Nouman Ali Khan",
