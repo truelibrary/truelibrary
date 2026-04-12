@@ -209,6 +209,13 @@ function PostPage() {
           <PortableText
             value={data.body}
             components={{
+              marks: {
+                link: ({ children, value }) => (
+                  <a href={value.href} target={"_blank"}>
+                    <Text component="span">{children}</Text>
+                  </a>
+                ),
+              },
               /* Temporary remove these for now */
               // listItem: {
               //   number: ({ children }) => (
