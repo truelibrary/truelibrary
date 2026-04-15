@@ -121,7 +121,11 @@ function PostPage() {
   );
 
   return (
-    <Container display={!isMobile ? "flex" : ""} size="md" pt={"sm"}>
+    <Container
+      display={!isMobile ? "flex" : ""}
+      size={`${isVisible ? "lg" : "md"}`}
+      pt={"sm"}
+    >
       <Group
         gap={12}
         className={`${classes.tags__wrapper} ${isVisible ? classes.sidebar__open : classes.sidebar__closed}`}
@@ -204,7 +208,7 @@ function PostPage() {
         <img height={48} src={Bismillah} />
         <h1>{data.title}</h1>
         {data.html ? (
-          <div dangerouslySetInnerHTML={{ __html: data.html.htmlContent }} />
+          <div className={classes.html__content} dangerouslySetInnerHTML={{ __html: data.html.htmlContent }} />
         ) : (
           <PortableText
             value={data.body}
@@ -334,7 +338,7 @@ const PostInfo = ({ data, responsive, tableOfContents }: PostInfoProps) => {
       pb={12}
       visibleFrom={responsive ? "md" : ""}
     >
-      <Stack w={320}>
+      <Stack w="100%">
         {data.tags && (
           <>
             <Text size="sm" ml={4} mt="sm" my="sm" c="dimmed">

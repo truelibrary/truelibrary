@@ -136,3 +136,15 @@ ol li.list::marker {
 .carousel button {
   background-color: var(--primary-color);
 }
+
+.html__content {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.html__content img,
+.html__content table,
+.html__content pre,
+.html__content iframe {
+  max-width: 100%;
+}
