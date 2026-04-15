@@ -121,7 +121,7 @@ function PostPage() {
   );
 
   return (
-    <Container display={!isMobile ? "flex" : ""} size="xl" pt={"sm"}>
+    <Container display={!isMobile ? "flex" : ""} size="md" pt={"sm"}>
       <Group
         gap={12}
         className={`${classes.tags__wrapper} ${isVisible ? classes.sidebar__open : classes.sidebar__closed}`}
