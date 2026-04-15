@@ -2,12 +2,14 @@ import Islambackup from "./islambackup.webp";
 import Uthmane from "./8thmane.png";
 import SaqrQuraysh from "./saqr.webp";
 import IslamLibrary from "./islamlibrary.webp";
+import MuhammadIslamovic from "./muhammadislam.png";
 
 export type AvatarMapper = {
   Islambackup: string;
   "8thmane": string;
   "Saqr Quraysh": string;
   "Islam Library": string;
+  "Muhammad Islamović": string;
 };
 
 export const authorAvatarMap: AvatarMapper = {
@@ -15,4 +17,5 @@ export const authorAvatarMap: AvatarMapper = {
   "8thmane": Uthmane,
   "Saqr Quraysh": SaqrQuraysh,
   "Islam Library": IslamLibrary,
+  "Muhammad Islamović": MuhammadIslamovic,
 };
