@@ -174,7 +174,7 @@ export const postType = defineType({
       options: {
         list: [
           { title: "Islam", value: "islam" },
-          { title: "Aqeedah", value: "aqeedah" },
+          { title: "Aqeeda", value: "aqeedah" },
           { title: "Atheist", value: "atheist" },
           { title: "Christians", value: "christian" },
           { title: "Wahabi", value: "wahabi" },

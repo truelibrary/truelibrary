@@ -12,7 +12,7 @@ const categories = [
   { title: "Islam", value: "islam" },
   // { title: "Atheist", value: "atheist" },
   { title: "Christians", value: "christian" },
-  { title: "Aqeedah", value: "aqeedah" },
+  { title: "Aqeeda", value: "aqeedah" },
   { title: '"Salafi" / Wahabi', value: "wahabi" },
   { title: "Quranist", value: "quranist" },
   { title: "Shias", value: "shia" },
@@ -60,7 +60,7 @@ function Home() {
                   (a, b) =>
                     //Infinity here because categoryWeight can be undefined
                     (a.categoryWeight || Infinity) -
-                    (b.categoryWeight || Infinity)
+                    (b.categoryWeight || Infinity),
                 )
                 .map((post) => (
                   <Link
