@@ -64,7 +64,7 @@ const englishScholars = [
       <>
         Focused on works of Nursi RA (best for strengthening faith). There is
         also an Turkish lectures{" "}
-        <a href="https://www.youtube.com/@RisaleiNurBSN?" target="_target">
+        <a href="https://www.youtube.com/@RisaleiNurBSN?" target="_blank" rel="noopener noreferrer">
           here
         </a>
       </>
@@ -191,12 +191,13 @@ const arabicScholar = [
         another channel{" "}
         <a
           href="https://m.youtube.com/channel/UC-Bec3z00xEkXotVpPSpKiw"
-          target="_target"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           here{" "}
         </a>
         and
-        <a href="https://m.youtube.com/@asyilaislamiyya" target="_target">
+        <a href="https://m.youtube.com/@asyilaislamiyya" target="_blank" rel="noopener noreferrer">
           {" "}
           here
         </a>
@@ -246,7 +247,8 @@ function Scholars() {
               <Grid.Col mt={"lg"} span={{ base: 12, sm: 6, md: 4 }}>
                 <Link
                   to={scholar.link || ""}
-                  target="_target"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{ color: "white" }}
                 >
                   <Stack className={classes.scholar__card}>
@@ -270,7 +272,8 @@ function Scholars() {
               <Grid.Col mt={"lg"} span={{ base: 12, sm: 6, md: 4 }}>
                 <Link
                   to={scholar.link || ""}
-                  target="_target"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{ color: "white" }}
                 >
                   <Stack className={classes.scholar__card}>

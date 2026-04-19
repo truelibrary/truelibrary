@@ -7,7 +7,6 @@ import { AppShell, createTheme, MantineProvider } from "@mantine/core";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router";
 import { headerRoutes } from "./router";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-import Home from "./pages/Library";
 import Post from "./pages/Post";
 import StudioRoute from "./pages/Studio";
 import { Header } from "./Header";
@@ -67,7 +66,7 @@ const Content = () => {
           ))}
           <Route path="/" element={Library} />
           <Route path="/studio" element={<StudioRoute />} />
-          <Route path="/post" element={Home} />
+          <Route path="/post" element={Library} />
           <Route path="/post/:slug" element={<Post />} />
         </Routes>
       </AppShell.Main>

@@ -32,6 +32,7 @@ import {
 } from "../assets/authorAvatars/mapper";
 import { Carousel } from "@mantine/carousel";
 import { useRef, type ReactNode } from "react";
+import DOMPurify from "dompurify";
 import { useInViewport } from "../hooks/useInViewport";
 
 const fetchPost = async (slug: string) => {
@@ -208,7 +209,7 @@ function PostPage() {
         <img height={48} src={Bismillah} />
         <h1>{data.title}</h1>
         {data.html ? (
-          <div className={classes.html__content} dangerouslySetInnerHTML={{ __html: data.html.htmlContent }} />
+          <div className={classes.html__content} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.html.htmlContent) }} />
         ) : (
           <PortableText
             value={data.body}
@@ -292,7 +293,7 @@ function PostPage() {
                   return (
                     <Carousel className={classes.carousel}>
                       {value.slides.map((slide: any) => (
-                        <Carousel.Slide>
+                        <Carousel.Slide key={slide._id}>
                           <img src={slide.asset.url} />
                         </Carousel.Slide>
                       ))}
@@ -327,16 +328,14 @@ export default PostPage;
 
 type PostInfoProps = {
   data: Post;
-  responsive?: boolean;
   tableOfContents: ReactNode;
 };
-const PostInfo = ({ data, responsive, tableOfContents }: PostInfoProps) => {
+const PostInfo = ({ data, tableOfContents }: PostInfoProps) => {
   return (
     <Group
       gap={12}
       className={classes.tags__wrapper}
       pb={12}
-      visibleFrom={responsive ? "md" : ""}
     >
       <Stack w="100%">
         {data.tags && (
@@ -365,7 +364,7 @@ const PostInfo = ({ data, responsive, tableOfContents }: PostInfoProps) => {
             <Text ml={4}>{data.author}</Text>
           </Flex>
         </Stack>
-        {responsive && tableOfContents}
+        {tableOfContents}
       </Stack>
     </Group>
   );
