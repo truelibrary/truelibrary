@@ -209,7 +209,12 @@ function PostPage() {
         <img height={48} src={Bismillah} />
         <h1>{data.title}</h1>
         {data.html ? (
-          <div className={classes.html__content} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.html.htmlContent) }} />
+          <div
+            className={classes.html__content}
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(data.html.htmlContent),
+            }}
+          />
         ) : (
           <PortableText
             value={data.body}
@@ -217,7 +222,9 @@ function PostPage() {
               marks: {
                 link: ({ children, value }) => (
                   <a href={value.href} target={"_blank"}>
-                    <Text component="span">{children}</Text>
+                    <Text style={{ wordWrap: "break-word" }} component="span">
+                      {children}
+                    </Text>
                   </a>
                 ),
               },
@@ -332,11 +339,7 @@ type PostInfoProps = {
 };
 const PostInfo = ({ data, tableOfContents }: PostInfoProps) => {
   return (
-    <Group
-      gap={12}
-      className={classes.tags__wrapper}
-      pb={12}
-    >
+    <Group gap={12} className={classes.tags__wrapper} pb={12}>
       <Stack w="100%">
         {data.tags && (
           <>
