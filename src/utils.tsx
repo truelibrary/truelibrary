@@ -1,6 +1,7 @@
 export const badges = [
   { title: "🕋 Islam", value: "islam" },
   { title: "✅ Proofs", value: "proofs" },
+  { title: "🖋️ Kalam", value: "kalam" },
   { title: "📖 Quran", value: "quran" },
   { title: "🌕 New to Islam", value: "new to islam" },
   { title: "💞 Marriage", value: "marriage" },
