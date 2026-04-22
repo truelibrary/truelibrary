@@ -124,6 +124,7 @@ export const postType = defineType({
           { title: "Narrations", value: "narrations" },
           { title: "New to Islam", value: "new to islam" },
           { title: "Proofs", value: "proofs" },
+          { title: "Kalam", value: "kalam" },
           { title: "Prophet Muhammad ﷺ", value: "rasulallah" },
           { title: "Quran", value: "quran" },
           { title: "Salafi", value: "salafi" },
