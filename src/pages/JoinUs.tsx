@@ -21,7 +21,8 @@ function JoinUs() {
               <Link
                 className={classes.link}
                 to={import.meta.env.VITE_YOUTUBE}
-                target="_target"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Stack
                   className={classes.icon__card}
@@ -38,7 +39,8 @@ function JoinUs() {
               <Link
                 className={classes.link}
                 to={import.meta.env.VITE_YOUTUBE}
-                target="_target"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Stack
                   className={classes.icon__card}
@@ -55,7 +57,8 @@ function JoinUs() {
               <Link
                 className={classes.link}
                 to={import.meta.env.VITE_TIKTOK}
-                target="_target"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Stack
                   className={classes.icon__card}

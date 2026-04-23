@@ -52,13 +52,12 @@ function Videos() {
           {videoCards.map((card) => {
             const thumbnailUrl = `https://img.youtube.com/vi/${card.videoId}/hqdefault.jpg`;
             return (
-              <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
+              <Grid.Col key={card.videoId} span={{ base: 12, sm: 6, md: 4 }}>
                 <Card
                   p="md"
                   radius="md"
-                  component="a"
+                  component="button"
                   h={"100%"}
-                  href="#"
                   className={classes.card}
                   onClick={() => onClickCard(card.videoId)}
                 >
